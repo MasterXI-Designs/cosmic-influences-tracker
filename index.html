@@ -19,19 +19,14 @@ main{max-width:900px;margin:0 auto;padding:16px}
 .hidden{display:none!important}
 .card{background:linear-gradient(160deg,var(--card),var(--bg2));border:1px solid #ffffff15;border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 8px 30px rgba(0,0,0,.45)}
 .card h3{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
-.big{font-size:2.2rem;font-weight:800}
-.small{font-size:.9rem;color:var(--muted)}
+.big{font-size:2.2rem;font-weight:800}.medium{font-size:1.5rem;font-weight:600}.small{font-size:.9rem;color:var(--muted)}
 .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.75rem;font-weight:600}
-.b-good{background:rgba(92,214,160,.15);color:var(--good)}.b-warn{background:rgba(255,184,107,.15);color:var(--warn)}.b-bad{background:rgba(255,107,139,.15);color:var(--bad)}.b-info{background:rgba(107,214,255,.15);color:var(--cyan)}
+.b-good{background:rgba(92,214,160,.15);color:var(--good)}.b-warn{background:rgba(255,184,107,.15);color:var(--warn)}.b-bad{background:rgba(255,107,139,.15);color:var(--bad)}.b-info{background:rgba(107,214,255,.15);color:var(--cyan)}.b-csf{background:rgba(255,209,102,.15);color:var(--gold)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
 .gauge-wrap{display:flex;align-items:center;gap:16px}
 .gauge{width:100px;height:100px;border-radius:50%;position:relative;display:grid;place-items:center;background:conic-gradient(var(--accent) 0%,#ffffff10 0%)}
 .gauge b{z-index:2;font-size:1.8rem}
-.gauge span{z-index:2;font-size:.6rem;color:var(--muted);position:absolute;bottom:8px}
-.wheel{width:100%;height:280px;position:relative;margin:16px 0}
-.wheel svg{width:100%;height:100%}
-.sign-label{font-size:.65rem;fill:var(--muted);text-anchor:middle}
-.planet-dot{stroke-width:3px}
+.wheel{width:100%;height:300px;position:relative;margin:16px 0}
 .influence-box{background:rgba(255,255,255,.05);border-radius:12px;padding:14px;margin:10px 0}
 .influence-box h4{font-size:.85rem;color:var(--accent2);margin-bottom:8px}
 .influence-box p{font-size:.9rem;line-height:1.6}
@@ -44,9 +39,13 @@ main{max-width:900px;margin:0 auto;padding:16px}
 input{width:100%;padding:12px;border-radius:10px;border:1px solid #ffffff20;background:#ffffff0a;color:var(--text);font-size:1rem}
 .btn{width:100%;padding:14px;border-radius:12px;border:none;background:var(--accent);color:white;font-size:1rem;font-weight:600;cursor:pointer;margin-top:12px}
 .btn:hover{filter:brightness(1.1)}
+.csf-window{background:linear-gradient(135deg,rgba(255,209,102,.15),rgba(139,92,255,.1));border:1px solid rgba(255,209,102,.3);border-radius:12px;padding:16px;margin:14px 0}
+.csf-title{font-size:1rem;color:var(--gold);font-weight:700;margin-bottom:8px}
+.csf-body{font-size:.9rem;line-height:1.6}
+.csf-tag{display:inline-block;background:rgba(255,209,102,.2);color:var(--gold);padding:2px 8px;border-radius:6px;font-size:.75rem;margin-left:8px}
 footer{text-align:center;color:var(--muted);font-size:.75rem;padding:20px}
 .disclaimer{font-size:.7rem;color:var(--muted);line-height:1.5;margin-top:16px}
-@media(max-width:480px){.big{font-size:1.8rem}.gauge{width:80px;height:80px}}
+@media(max-width:480px){.big{font-size:1.8rem}.gauge{width:80px;height:80px}.wheel{height:240px}}
 </style>
 </head>
 <body>
@@ -73,27 +72,24 @@ footer{text-align:center;color:var(--muted);font-size:.75rem;padding:20px}
 </div>
 
 <div class="grid">
-<div class="card">
-<h3>Personal Day</h3>
-<div class="big" id="personalDay">—</div>
-<div class="small" id="personalDesc"></div>
-</div>
-<div class="card">
-<h3>Universal Day</h3>
-<div class="big" id="universalDay">—</div>
-<div class="small" id="universalDesc"></div>
-</div>
+<div class="card"><h3>Personal Day</h3><div class="big" id="personalDay">—</div><div class="small" id="personalDesc"></div></div>
+<div class="card"><h3>Universal Day</h3><div class="big" id="universalDay">—</div><div class="small" id="universalDesc"></div></div>
 </div>
 
 <div class="card">
 <h3>Cosmic Intensity Meter</h3>
 <div class="gauge-wrap">
-<div class="gauge" id="intensityGauge"><b>0</b><span>/100</span></div>
+<div class="gauge" id="intensityGauge"><b>0</b></div>
 <div style="flex:1">
 <div class="big" id="intensityLabel">Calibrating...</div>
 <p class="small" id="intensityDesc"></p>
 </div>
 </div>
+</div>
+
+<div class="csf-window hidden" id="csfWindow">
+<div class="csf-title">⚡ CSF Ascension Window Active <span class="csf-tag">2.5-Day Cycle</span></div>
+<div class="csf-body" id="csfDetails">Activating...</div>
 </div>
 
 <div class="card">
@@ -116,9 +112,7 @@ footer{text-align:center;color:var(--muted);font-size:.75rem;padding:20px}
 
 <div class="influence-box">
 <h4>✨ How to Work With It</h4>
-<ul class="advice-list" id="adviceList">
-<li>Loading recommendations...</li>
-</ul>
+<ul class="advice-list" id="adviceList"><li>Loading recommendations...</li></ul>
 </div>
 
 <p class="disclaimer">Data: NOAA SWPC (real-time solar data) • Numerology & Sidereal Astrology (interpretive traditions for reflection)</p>
@@ -135,18 +129,22 @@ footer{text-align:center;color:var(--muted);font-size:.75rem;padding:20px}
 </div>
 
 <div class="card">
-<h3>Moon Phase</h3>
+<h3>Moon Phase & CSF Status</h3>
 <div class="big" id="moonPhaseName">—</div>
 <div class="small" id="moonInfo"></div>
 <div class="influence-box">
 <h4>🌙 Moon Effects Today</h4>
 <p id="moonEffects">Loading lunar influence...</p>
 </div>
+<div class="influence-box">
+<h4>🌀 CSF Ascension Windows</h4>
+<p id="csfWindows">Checking lunar cycle...</p>
+</div>
 </div>
 
 <div class="card">
-<h3>Active Aspects</h3>
-<div id="aspectList"><p class="small">Computing...</p></div>
+<h3>Sidereal Positions</h3>
+<div class="grid" id="planetGrid"><p class="small">Loading...</p></div>
 </div>
 </section>
 
@@ -198,7 +196,7 @@ Data: NOAA Space Weather Prediction Center • Cosmic Tracker runs 100% locally 
 <script>
 'use strict';
 const $ = s => document.querySelector(s);
-const LS_KEY = 'cosmicTracker.v2';
+const LS_KEY = 'cosmicTracker.v3';
 
 // === UTILITIES ===
 const norm360 = x => ((x % 360) + 360) % 360;
@@ -227,8 +225,9 @@ function udn(dt) { return reduceNum(digitSum(dt.getFullYear()) + digitSum(dt.get
 function pdn(dt, dob) { const [y,m,d] = dob.split('-').map(Number); return reduceNum(digitSum(dt.getFullYear()) + digitSum(dt.getMonth()+1) + digitSum(dt.getDate()) + m + d); }
 
 // === EPHEMERIS ===
-const SIGNS = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
-const SIGNS_GLYPH = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+// 13 SIGNS INCLUDING OPHIUCHUS
+const SIGNS = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Ophiuchus','Sagittarius','Capricorn','Aquarius','Pisces'];
+const SIGNS_GLYPH = ['♈','♉','♊','♋','♌','♍','♎','♏','⛎','♐','♑','♒','♓'];
 const AYA = 23.8531;
 
 function toJulian(date) { return date.getTime()/86400000 + 2440587.5; }
@@ -276,23 +275,64 @@ function moonPos(d,sun) {
 function moonPhase(mol,sol) {
   const el = norm360(mol-sol), illum = (1-Math.cos(d2r(el)))/2;
   const names = ['New Moon','Waxing Crescent','First Quarter','Waxing Gibbous','Full Moon','Waning Gibbous','Last Quarter','Waning Crescent'];
-  return { name: names[Math.floor(((el+22.5)%360)/45)], illum };
+  return { name: names[Math.floor(((el+22.5)%360)/45)], illum, elong: el };
 }
 
 function snapshot(dt) {
   const jd = toJulian(dt), d = dNum(jd), sun = sunPos(d), moon = moonPos(d,sun), bodies = [];
-  const add = (nm,lon,r,c) => bodies.push({name:nm,lon:sig:Math.floor(((lon-AYA+360)%360)/30),deg:((lon-AYA+360)%360)%30,ret:r,col:c});
+  const add = (nm,lon,r,c) => bodies.push({name:nm,lon:lon,ret:r,col:c,signIdx:Math.floor(((lon-AYA+360)%360)/30),degInSign:((lon-AYA+360)%360)%30});
   add('Sun',sun.lon,false,'#ffd166'); add('Moon',moon.lon,false,'#dfe6ff');
   PLANETS.forEach(p=>{const now=planetLon(p,d,sun),prev=planetLon(p,d-1,sun),delta=((now-prev+540)%360)-180;add(p.n,now,delta<0,p.col)});
   add('Node',norm360(moon.node+180),false,'#b8ffd9');
-  return {bodies,phase:moonPhase(moon.lon,sun.lon)};
+  return {bodies,phase:moonPhase(moon.lon,sun.lon),moonLon:moon.lon,sunLon:sun.lon};
+}
+
+// === CSF ASCENSION WINDOWS ===
+function getCsfWindows(phase, moonSign, sunSign) {
+  const windows = [];
+  const daysUntilNew = Math.round(phase.illum > 0.5 ? (1-phase.illum)*28 : phase.illum*28);
+  const isPeakWindow = phase.illum < 0.15 || phase.illum > 0.85;
+  
+  if (isPeakWindow) {
+    const type = phase.illum < 0.15 ? 'New Moon' : 'Full Moon';
+    const effect = phase.illum < 0.15 ? 'Setting intentions, releasing old cycles, potent for manifestation' : 'Emotional peak, heightened psychic awareness, integration time';
+    
+    windows.push({
+      type: type,
+      daysLeft: phase.illum < 0.15 ? daysUntilNew : 14-daysUntilNew,
+      duration: '2.5 days',
+      effect: effect,
+      sign: SIGNS[moonSign] || 'Unknown',
+      power: 'High'
+    });
+  }
+  
+  return windows;
 }
 
 // === SPACE WEATHER ===
 const SWPC = { kp:'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json', plasma:'https://services.swpc.noaa.gov/products/solar-wind/plasma-2-hour.json' };
 
-async function fetchKP() { try { const r=await fetch(SWPC.kp); if(!r.ok)return null; const d=await r.json(); return d&&d.length?{val:d[d.length-1].value||0,t:d[d.length-1].time||'now'}:null;} catch(e){return null;} }
-async function fetchPlasma() { try { const r=await fetch(SWPC.plasma); if(!r.ok)return null; const d=await r.json(); return d&&d.length?d[d.length-1]:null;} catch(e){return null;} }
+async function fetchKP() { 
+  try { 
+    const r = await fetch(SWPC.kp);
+    if(!r.ok) return null;
+    const d = await r.json();
+    if(!d || !d.length) return null;
+    const latest = d[d.length-1];
+    return { val: latest.value || 0, t: latest.time || 'now' };
+  } catch(e) { return null; }
+}
+
+async function fetchPlasma() { 
+  try { 
+    const r = await fetch(SWPC.plasma);
+    if(!r.ok) return null;
+    const d = await r.json();
+    if(!d || !d.length) return null;
+    return d[d.length-1];
+  } catch(e) { return null; }
+}
 
 // === RENDERING ===
 function loadPF(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch(e){return {};}}
@@ -302,48 +342,45 @@ function drawWheel(bodies,phase) {
   const svg = $('#wheelSvg'), cx=200, cy=200, r=180;
   svg.innerHTML = '';
   
-  // Background circle
-  svg.innerHTML += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#140d33" stroke="#ffffff20" stroke-width="1"/>`;
-  svg.innerHTML += `<circle cx="${cx}" cy="${cy}" r="${r*0.8}" fill="none" stroke="#ffffff10" stroke-width="0.5"/>`;
-  svg.innerHTML += `<circle cx="${cx}" cy="${cy}" r="${r*0.6}" fill="none" stroke="#ffffff10" stroke-width="0.5"/>`;
+  svg.innerHTML += '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#140d33" stroke="#ffffff20" stroke-width="1"/>';
+  svg.innerHTML += '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.8)+'" fill="none" stroke="#ffffff10" stroke-width="0.5"/>';
+  svg.innerHTML += '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.6)+'" fill="none" stroke="#ffffff10" stroke-width="0.5"/>';
   
-  // Zodiac ring
   SIGNS.forEach((s,i)=>{
-    const ang = (i*30-90)*Math.PI/180, x=cx+r*0.95*Math.cos(ang), y=cy+r*0.95*Math.sin(ang);
-    svg.innerHTML += `<text x="${x}" y="${y}" class="sign-label">${SIGNS_GLYPH[i]}</text>`;
+    const ang = (i*360/13-90)*Math.PI/180, x=cx+r*0.95*Math.cos(ang), y=cy+r*0.95*Math.sin(ang);
+    svg.innerHTML += '<text x="'+x+'" y="'+y+'" class="sign-label" font-size="9">'+SIGNS_GLYPH[i]+'</text>';
   });
   
-  // Planet positions
   bodies.forEach(b=>{
-    const ang = (b.sig*30+b.deg-90)*Math.PI/180, x=cx+r*0.7*Math.cos(ang), y=cy+r*0.7*Math.sin(ang);
-    svg.innerHTML += `<circle cx="${x}" cy="${y}" r="5" fill="${b.col}" class="planet-dot"/>`;
-    svg.innerHTML += `<text x="${x+8}" y="${y+3}" font-size="8" fill="${b.col}">${b.name.substring(0,3)}</text>`;
+    const ang = (b.signIdx*360/13+b.degInSign/30*360/13-90)*Math.PI/180, x=cx+r*0.7*Math.cos(ang), y=cy+r*0.7*Math.sin(ang);
+    svg.innerHTML += '<circle cx="'+x+'" cy="'+y+'" r="5" fill="'+b.col+'" class="planet-dot"/>';
+    svg.innerHTML += '<text x="'+(x+8)+'" y="'+(y+3)+'" font-size="8" fill="'+b.col+'">'+b.name.substring(0,3)+'</text>';
   });
   
-  // Moon indicator
-  const mag = (phase.illum > 0.5 ? 'Full' : 'New') + ' Moon';
-  svg.innerHTML += `<text x="${cx}" y="${cy-5}" font-size="10" fill="#fff" text-anchor="middle">${mag}</text>`;
+  svg.innerHTML += '<text x="'+cx+'" y="'+(cy-5)+'" font-size="10" fill="#fff" text-anchor="middle">'+(phase.illum>0.5?'Full':'New')+' Moon</text>';
 }
 
-function synthesizeGuidance(pd,ud,kp,bodies,phase) {
+function synthesizeGuidance(pd,ud,kp,bodies,phase,moonSign,sunSign) {
   const pdt = MEANINGS[pd]||{}, udt = MEANINGS[ud]||{};
   const kpVal = kp?.val || 3, isStorm = kpVal >= 6, isQuiet = kpVal <= 2;
   const moonFull = phase.illum > 0.6, moonNew = phase.illum < 0.2;
+  const csfActive = getCsfWindows(phase, moonSign, sunSign);
   
   let intensity = Math.min(100, pd + ud + Math.floor(kpVal*10));
   let label = intensity < 30 ? 'Calm & Grounded' : intensity < 60 ? 'Balanced Energy' : 'High Cosmic Activity';
   
-  let bodyTxt = `Your energy aligns with Personal Day ${pd}. `;
+  let bodyTxt = 'Your energy aligns with Personal Day '+pd+'. ';
   if(isStorm) bodyTxt += 'Solar activity may cause mild fatigue or restlessness. Drink water and take breaks. ';
   else if(isQuiet) bodyTxt += 'Geomagnetic calm supports physical healing and rest. ';
-  if(phase.illum > 0.8) bodyTxt += 'Full moon amplifies physical sensitivity — honor your limits. ';
+  if(moonFull) bodyTxt += 'Full moon amplifies physical sensitivity — honor your limits. ';
+  else if(moonNew) bodyTxt += 'New moon brings renewal energy — good for starting health routines. ';
   
-  let mindTxt = `Mental focus favors ${pdt.energy?.toLowerCase()||'steady'} thinking. `;
+  let mindTxt = 'Mental focus favors '+(pdt.energy?.toLowerCase()||'steady')+' thinking. ';
   if(isStorm) mindTxt += 'Space storms can scatter concentration — batch simple tasks. ';
   else mindTxt += 'Clear geomagnetic conditions aid deep work. ';
   if(moonNew) mindTxt += 'New moon brings fresh mental clarity — set intentions now. ';
   
-  let emotTxt = `Emotionally tuned to cooperation. `;
+  let emotTxt = 'Emotionally tuned to '+(pdt.energy?.toLowerCase()||'cooperation')+'. ';
   if(isStorm) emotTxt += 'Geomagnetic stress may heighten irritability — practice patience. ';
   if(phase.illum > 0.7) emotTxt += 'Full moon heightens emotional intensity — journal or talk it out. ';
   else emotTxt += 'Waning moon supports emotional release and letting go. ';
@@ -352,9 +389,9 @@ function synthesizeGuidance(pd,ud,kp,bodies,phase) {
   adv.push({i:'💡',t:'Work',txt:isStorm?'Focus on routine tasks; defer big decisions':'Ideal for creative projects and launches'});
   adv.push({i:'🥗',t:'Health',txt:isStorm?'Hydrate well, reduce caffeine':'Support recovery with rest and light movement'});
   adv.push({i:'💬',t:'Social',txt:moonFull?'Expect heightened emotions in conversations':'Good time for quiet connection and listening'});
-  adv.push({i:'✨',t:'Spiritual',txt:`Energy supports ${pdt.title?.toLowerCase()} practices. Trust intuition.`:'Stay grounded; meditation recommended'});
+  adv.push({i:'✨',t:'Spiritual',txt:'Energy supports '+(pdt.title?.toLowerCase()||'meditation')+' practices. Trust intuition.'});
   
-  return { intensity, label, bodyTxt, mindTxt, emotTxt, adv };
+  return { intensity, label, bodyTxt, mindTxt, emotTxt, adv, csfActive };
 }
 
 async function renderAll() {
@@ -363,6 +400,8 @@ async function renderAll() {
   
   const snap = snapshot(dt), kp = await fetchKP(), pl = await fetchPlasma();
   const pd = pf.dob ? pdn(dt,pf.dob) : 0, ud = udn(dt);
+  const moonSign = snap.bodies.find(b=>b.name==='Moon')?.signIdx || 0;
+  const sunSign = snap.bodies.find(b=>b.name==='Sun')?.signIdx || 0;
   
   // Today tab
   if(pf.dob) {
@@ -370,27 +409,47 @@ async function renderAll() {
     $('#personalDay').textContent = pd; $('#personalDesc').textContent = m?.title;
     $('#universalDay').textContent = ud; $('#universalDesc').textContent = udm?.title;
     
-    const synth = synthesizeGuidance(pd,ud,kp,snap.bodies,snap.phase);
+    const synth = synthesizeGuidance(pd,ud,kp,snap.bodies,snap.phase,moonSign,sunSign);
     $('#intensityGauge').querySelector('b').textContent = synth.intensity;
     $('#intensityLabel').textContent = synth.label;
-    $('#intensityDesc').textContent = `Combined score from numerology (${pd},${ud}) + Kp (${kp?.val||'N/A'}) + lunar phase`;
+    $('#intensityDesc').textContent = 'Combined score from numerology ('+pd+','+ud+') + Kp ('+(kp?.val||'N/A')+') + lunar phase';
     $('#bodyInfluence').textContent = synth.bodyTxt;
     $('#mindInfluence').textContent = synth.mindTxt;
     $('#emotionInfluence').textContent = synth.emotTxt;
-    $('#adviceList').innerHTML = synth.adv.map(a=>`<li><span class="advice-icon">${a.i}</span><div><strong>${a.t}</strong>: ${a.txt}</div></li>`).join('');
+    $('#adviceList').innerHTML = synth.adv.map(a=>'<li><span class="advice-icon">'+a.i+'</span><div><strong>'+a.t+'</strong>: '+a.txt+'</div></li>').join('');
+    
+    // CSF Window
+    if(synth.csfActive.length > 0) {
+      $('#csfWindow').classList.remove('hidden');
+      const cw = synth.csfActive[0];
+      $('#csfDetails').textContent = cw.type+' in '+cw.sign+' — '+cw.effect+' (Next '+cw.daysLeft+' days)';
+    } else {
+      $('#csfWindow').classList.add('hidden');
+    }
   } else {
     $('#personalDay').textContent = '—'; $('#universalDay').textContent = ud;
     $('#intensityLabel').textContent = 'Set Profile for Guidance';
     $('#bodyInfluence').textContent = 'Complete your profile to see personalized effects';
     $('#mindInfluence').textContent = ''; $('#emotionInfluence').textContent = '';
     $('#adviceList').innerHTML = '<li>Set your birth date in Profile tab</li>';
+    $('#csfWindow').classList.add('hidden');
   }
   
   // Wheel tab
   drawWheel(snap.bodies, snap.phase);
   $('#moonPhaseName').textContent = snap.phase.name;
-  $('#moonInfo').textContent = `${(snap.phase.illum*100).toFixed(1)}% illuminated`;
-  $('#moonEffects').textContent = `Moon in ${(snap.bodies.find(b=>b.name==='Moon')?.sig||0)*30}° affects emotional tides. ${snap.phase.illum>0.5?'Energy peaks now.': 'Time for planning, not launching.'}`;
+  $('#moonInfo').textContent = (snap.phase.illum*100).toFixed(1)+'% illuminated';
+  
+  const csfWins = getCsfWindows(snap.phase, moonSign, sunSign);
+  if(csfWins.length > 0) {
+    $('#csfWindows').innerHTML = '<strong>'+csfWins[0].type+'</strong> in <span style="color:'+var(--gold)+'">'+csfWins[0].sign+'</span>. '+csfWins[0].effect+' Power Level: '+csfWins[0].power;
+  } else {
+    $('#csfWindows').textContent = 'No active CSF window — standard lunar cycle in effect';
+  }
+  
+  $('#moonEffects').textContent = 'Moon at '+(moonSign*360/13).toFixed(0)+'° affects emotional tides. '+(snap.phase.illum>0.5?'Energy peaks now.':'Time for planning, not launching.');
+  
+  $('#planetGrid').innerHTML = snap.bodies.map(b=>'<div class="card"><div class="small">'+b.name+'</div><div class="medium" style="font-size:1rem">'+SIGNS[b.signIdx]+' '+b.degInSign.toFixed(1)+'°'+(b.ret?'<span class="badge b-bad">R</span>':'')+'</div></div>').join('');
   
   // Space tab
   if(kp) {
@@ -404,16 +463,16 @@ async function renderAll() {
 
 function renderTab(id) {
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  $(`[data-tab="${id}"]`).classList.add('active');
+  $('[data-tab="'+id+'"]').classList.add('active');
   document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
-  $(`#tab-${id}`).classList.remove('hidden');
+  $('#tab-'+id).classList.remove('hidden');
 }
 
 // === EVENTS ===
-$('#settingsBtn').onclick = ()=>renderTab('profile');
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>renderTab(b.dataset.tab));
-$('#profileForm').onsubmit = e=>{e.preventDefault();savePF({name:$('#pName').value,dob:$('#pDob').value});alert('Saved! 🌟');renderAll();};
-$('#clearBtn').onclick = ()=>{if(confirm('Delete all profile?')){localStorage.removeItem(LS_KEY);location.reload();}};
+$('#settingsBtn').onclick = function() { renderTab('profile'); };
+document.querySelectorAll('.tab').forEach(function(b) { b.onclick = function() { renderTab(b.dataset.tab); }; });
+$('#profileForm').onsubmit = function(e) { e.preventDefault(); savePF({name:$('#pName').value,dob:$('#pDob').value}); alert('Saved! 🌟'); renderAll(); };
+$('#clearBtn').onclick = function() { if(confirm('Delete all profile?')) { localStorage.removeItem(LS_KEY); location.reload(); } };
 $('#refreshBtn').onclick = renderAll;
 
 // Boot
